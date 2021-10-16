@@ -1,0 +1,3 @@
+[submodule "phpupfile"]
+	path = phpupfile
+	url = https://github.com/raojinlin/phpupfile
