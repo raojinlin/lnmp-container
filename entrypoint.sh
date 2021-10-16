@@ -21,11 +21,12 @@ node /var/www/nodejs/server.js &
 
 sleep 5;
 
-mysql -e "CREATE USER 'upfile'@'localhost' IDENTIFIED BY 'MyPassword'"
+mysql -e "CREATE USER 'upfile'@'%' IDENTIFIED BY 'MyPassword'"
 mysql -e 'CREATE DATABASE mydb';
-mysql -e "GRANT ALL ON mydb.* TO 'upfile'@'localhost'"
-cat /var/www/phpupfile/schema/photos.sql | mysql --database mydb
+mysql -e "GRANT ALL ON *.* TO 'upfile'@'%'"
+mysql -e "GRANT FILE ON *.* TO 'upfile'@'%'"
 
+cat /var/www/phpupfile/schema/photos.sql | mysql --database mydb
 
 echo "running"
 jobs -l
