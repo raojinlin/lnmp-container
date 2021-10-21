@@ -9,6 +9,6 @@ COPY conf/mysqld.conf /etc/mysql/mysql.conf.d/mysqld.cnf
 COPY entrypoint.sh /entrypoint.sh
 COPY server.js /var/www/nodejs/server.js
 
-RUN cd /var/www/phpupfile && rm .git && git init . && git config --global user.email "test@example.com" && git config --global user.name test && git add . && git commit -am 'first commit'
+RUN chmod 777 /var/www/nodejs/server.js && cd /var/www/phpupfile && rm .git && git init . && git config --global user.email "test@example.com" && git config --global user.name test && git add . && git commit -am 'first commit'
 
 ENTRYPOINT ["bash", "/entrypoint.sh"]
